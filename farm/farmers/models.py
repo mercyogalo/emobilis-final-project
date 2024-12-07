@@ -52,42 +52,9 @@ class Contact(models.Model):
     
     def __str__(self):
         return self.name
-    
-    
-class SupervisorProfile(models.Model):
-        name=models.CharField( max_length=100)
-        email=models.EmailField(default='default@example.com')
-        role=models.CharField( max_length=100)
-        phone=models.IntegerField()
-        image=models.ImageField(upload_to='profileimages/')
-        
-        def __str__(self):
-            return self.name
-        
-        
-        
-class WorkerProfile(models.Model):
-        name=models.CharField( max_length=100)
-        email=models.EmailField(default='default@example.com')
-        role=models.CharField( max_length=100)
-        phone=models.IntegerField()
-        image=models.ImageField(upload_to='profileimages/')
-        
-        def __str__(self):
-            return self.name
-        
-    
+  
 
-class MainProfile(models.Model):
-        name=models.CharField( max_length=100)
-        email=models.EmailField()
-        role=models.CharField( max_length=100)
-        phone=models.IntegerField()
-        image=models.ImageField(upload_to='profileimages/')
-        
-        def __str__(self):
-            return self.name
-        
+
 
 class SupervisorCreateworker(models.Model):
     name=models.CharField(max_length=100)
@@ -96,7 +63,6 @@ class SupervisorCreateworker(models.Model):
     worktype=models.CharField( max_length=100)
     role=models.CharField( max_length=100)
     status=models.CharField( max_length=100)
-    group=models.CharField( max_length=50)
     image=models.ImageField(upload_to='workerimages/')
 
 

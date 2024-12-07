@@ -40,7 +40,7 @@ def login_(request):
         email = request.POST['email']
         password = request.POST['password']
         
-        user = authenticate(email=email, password=password)
+        user = authenticate(username=email, password=password)
         if user:
             login(request, user)
             messages.success(request, f'Welcome { user.username}')
@@ -48,12 +48,13 @@ def login_(request):
             if user.user_type == 'admin':
                 return redirect('farmers:home')
             elif user.user_type == 'supervisor':
-                return redirect('farmer:supervisorHome')
+                return redirect('farmers:supervisorHome')
             else:
                 return redirect('farmers:workerHome')
         else:
             print("Login fail")
     return render(request, 'login/login.html')
 
-
-        
+def logout_(request):
+    logout(request) 
+    return redirect('authentication:login')       

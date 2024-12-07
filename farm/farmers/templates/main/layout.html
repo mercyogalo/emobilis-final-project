@@ -47,7 +47,12 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  
+  <style>
+    .worker-header{
+      color: #3C5E13;
+      text-align: center;
+    }
+  </style>
 
 
 </head>
@@ -117,12 +122,12 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url "farmers:contact" %}">
           <i class="bi bi-envelope me-2"></i>
-          <span>Contact</span>
+          <span>Notifications</span>
         </a>
       </li><!-- End Contact Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url "farmers:login" %}">
+        <a class="nav-link collapsed" href="{% url "authentication:logout" %}">
           <i class="bi bi-card-list me-2"></i>
           <span>Log out</span>
         </a>

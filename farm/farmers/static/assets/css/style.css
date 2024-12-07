@@ -708,3 +708,11 @@ h6 {
 .pagetitle h1{
   color: var(--secondary-color);
 }
+
+.border-success{
+  color: #3C5E13 !important;
+}
+.worker-header{
+  color: #3C5E13;
+  text-align: center;
+}

@@ -39,13 +39,12 @@ Homepage
 
           <div class="col-lg-6">
 
-         {% for supervisorProfile in supervisorProfiles %}
             
                         <div class="card">
                           <div class="card-body pt-3">
                             <div class="tab-content pt-2">
                               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                                <img src="{{supervisorProfile.image.url}}" width="80px" height="80px" alt="Profile-image" class="rounded-circle">
+                                <img src="{{supervisorProfiles.image.url}}" width="80px" height="80px" alt="Profile-image" class="rounded-circle">
                                   </div>
                               <div class="tab-pane fade show active profile-overview" >
                               
@@ -54,22 +53,27 @@ Homepage
               
                                 <div class="row">
                                   <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                  <div class="col-lg-9 col-md-8">{{supervisorProfile.name}}</div>
+                                  <div class="col-lg-9 col-md-8">{{supervisorProfiles.name}}</div>
                                 </div>
                                 <br/>
                                 <div class="row">
                                   <div class="col-lg-3 col-md-4 label">Job</div>
-                                  <div class="col-lg-9 col-md-8">{{supervisorProfile.role}}r</div>
+                                  <div class="col-lg-9 col-md-8">{{supervisorProfiles.role}}</div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                  <div class="col-lg-3 col-md-4 label">Worker ID</div>
+                                  <div class="col-lg-9 col-md-8">417100{{supervisorProfiles.id}}</div>
                                 </div>
                                 <br/>
                                 <div class="row">
                                   <div class="col-lg-3 col-md-4 label">Phone</div>
-                                  <div class="col-lg-9 col-md-8">0{{supervisorProfile.phone}}</div>
+                                  <div class="col-lg-9 col-md-8">0{{supervisorProfiles.phone}}</div>
                                 </div>
                       <br/>
                                 <div class="row">
                                   <div class="col-lg-3 col-md-4 label">Email</div>
-                                  <div class="col-lg-9 col-md-8">{{supervisorProfile.email}}</div>
+                                  <div class="col-lg-9 col-md-8">{{supervisorProfiles.email}}</div>
                                 </div>
             
                              
@@ -80,7 +84,6 @@ Homepage
                             </div>
                           </div>
                         </div>
-                        {% endfor %}
             
                       
 
@@ -136,7 +139,6 @@ Homepage
         <div class="card recent-sales overflow-auto">
 
           <div class="filter">
-            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
               <li class="dropdown-header text-start">
                 <h6>Filter</h6>
@@ -166,11 +168,11 @@ Homepage
               
              {% for supervisortask in  supervisortasks %}
                <tr>
-                  <th scope="row"><a href="#">{{supervisortask.role}}</a></th>
+                  <th scope="row" class="text-primary">{{supervisortask.role}}</th>
                   <td>{{supervisortask.name}}</td>
-                  <td><a href="#" class="text-primary">{{supervisortask.description}}</a></td>
+                  <td class="text-primary"> {{supervisortask.description}}</td>
                   <td>{{supervisortask.days}}</td>
-                  <td><span class="badge ">{{supervisortask.status}}</span></td>
+                  <td><span class="badge  btn create-button">Pending</span></td>
                 </tr>
                
                 {% endfor %}
@@ -184,71 +186,61 @@ Homepage
       </div><!-- End Recent Sales -->
 
 
+ <!-- Top Selling -->
+ <div class="col-12">
+  <div class="card top-selling overflow-auto">
 
-            <!-- Top Selling -->
-            <div class="col-12">
-              <div class="card top-selling overflow-auto">
+    <div class="filter">
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+      
+    </div>
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
+    <div class="card-body pb-0">
+      <h5 class="card-title">Current Workers <span>| Today</span></h5>
 
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
-
-                <div class="card-body pb-0">
-                  <h5 class="card-title">Current Workers <span>| Today</span></h5>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Worker</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Worker ID</th>
-                        <th scope="col">Group</th>
-                        <th scope="col">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">Worker</th>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
 
 
-                      {% for supervisorworker in supervisorworkers %}
-                      <tr>
-                        <th scope="row"><a href="#"><img src="{{supervisorworker.image.url}}" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">{{supervisorworker.name}}</a></td>
-                        <td>{{supervisorworker.role}}</td>
-                        <td class="fw-bold">{{supervisorworker.email}}</td>
-                        <td>417100{{supervisorworker.id}}</td>
-                        <td class="fw-bold">{{supervisorworker.group}}</td>
-                        <td>   
-                          {% if  supervisorworker.status == "terminated" %}
-                          <button type="button" class="btn btn-danger">Terminated</button>
-                          {% elif supervisorworker.status == "active" %}
-                          <button type="button" class="btn btn-success">Active</button>
-                          {% elif supervisorworker.status == "leave"  %}
-                          <button type="button" class="btn btn-warning">Leave</button>
-                          {% else %}
-                        <p>Invalid entry!!</p>
-                          {% endif %}</td>
-                      </tr>
-                      
-                      {% endfor %}
+          {% for supervisorworker in supervisorworkers %}
+          <tr>
+            <th scope="row"><a href="#"><img src="{{supervisorworker.image.url}}" alt=""></a></th>
+            <td class="text-primary fw-bold">{{supervisorworker.name}}</td>
+            <td>{{supervisorworker.role}}</td>
+            <td class="text-primary">{{supervisorworker.email}}</td>
+            <td>0{{supervisorworker.phone}}</td>
+            <td>   
+              {% if  supervisorworker.status == "terminated" %}
+              <button type="button" class="btn btn-danger">Terminated</button>
+              {% elif supervisorworker.status == "active" %}
+              <button type="button" class="btn btn-success">Active</button>
+              {% elif supervisorworker.status == "leave"  %}
+              <button type="button" class="btn btn-warning">Leave</button>
+              {% else %}
+            <p>Invalid entry!!</p>
+              {% endif %}</td>
+          </tr>
+          
+          {% endfor %}
 
-                    </tbody>
-                  </table>
+        </tbody>
+      </table>
 
-                </div>
+    </div>
 
-              </div>
-            </div><!-- End Top Selling -->
+  </div>
+</div><!-- End Top Selling -->
+
 
 
       

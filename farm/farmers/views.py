@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect
-from . models import Farmer, Task, Worker, SupervisorCreatetask, SupervisorCreateworker,WorkerProfile,SupervisorProfile,MainProfile
+from django.shortcuts import render,redirect,get_object_or_404
+from . models import Farmer, Task, Worker, SupervisorCreatetask, SupervisorCreateworker
 from django.views.decorators.csrf import csrf_exempt
 from authentication.models import CustomUser
 
@@ -158,37 +158,35 @@ def contact(request):
 
 #Workers pages
 def workerHome(request):
-    supervisorworker=SupervisorCreateworker.objects.all()
-    supervisortask=SupervisorCreatetask.objects.all()
-    workerProfiles=WorkerProfile.objects.all()
+    profiles=get_object_or_404(SupervisorCreateworker,email=request.user.email)
+    supervisortasks=SupervisorCreatetask.objects.all()
     context={
-        'supervisorworker': supervisorworker,
-        'supervisortask': supervisortask,
-        'workerProfiles':workerProfiles
-       
+        'supervisortasks': supervisortasks,
+        'profiles':profiles
     }
     return render(request,'workers/worker-home.html',context)
 
-def workerTask(request):
-    tasks=Task.objects.all()
-    return render(request,'workers/worker-task.html',{'tasks': tasks})
 
-def workerWorkers(request):
-    workers=Worker.objects.all()
-    return render(request, 'workers/worker-workers.html',{'workers': workers})
+def workerTask(request):
+    if request.user.is_authenticated:
+        supervisortasks = SupervisorCreatetask.objects.all()
+        context = {
+            'supervisortasks': supervisortasks,
+        }
+        return render(request, 'workers/worker-task.html', context)
+    else:
+        return redirect('login')
 
 
 
 def supervisorHome(request):
-        supervisortask = SupervisorCreatetask.objects.all()
-        supervisorworker = SupervisorCreateworker.objects.all()
-        worker = Worker.objects.all()  
-        supervisorProfiles=SupervisorProfile.objects.all()
+        supervisortasks = SupervisorCreatetask.objects.all()
+        supervisorworkers = SupervisorCreateworker.objects.all()
+        supervisorProfiles=get_object_or_404(Worker,email=request.user.email)
 
         context = {
-            'worker': worker,
-            'supervisortask': supervisortask,
-            'supervisorworker': supervisorworker,
+            'supervisortasks': supervisortasks,
+            'supervisorworkers': supervisorworkers,
             'supervisorProfiles':supervisorProfiles
             
         }
@@ -207,7 +205,7 @@ def supervisorCreateTaskPage(request):
         
         supervisortask=SupervisorCreatetask(name=name,role=role,heading=heading,description=description,days=days)
         supervisortask.save()
-        return redirect('/supervisorTasksPage/')    
+        return redirect('/supervisorTaskPage/')    
     
     return render(request,'supervisor/create-task.html')
 
@@ -229,10 +227,10 @@ def supervisorEditTaskPage(request,id):
         supervisortasks.days = days
 
         supervisortasks.save()
-        return redirect('/supervisorTasksPage/')
+        return redirect('/supervisorTaskPage/')
         
     supervisortasks=SupervisorCreatetask.objects.get(id = id)
-    return render(request,'supervisor/edit-task.html')
+    return render(request,'supervisor/edit-task.html',{'supervisortasks': supervisortasks})
 
 def supervisorTaskDelete(request,id):
     supervisortasks=SupervisorCreatetask.objects.get(id = id)
@@ -240,8 +238,11 @@ def supervisorTaskDelete(request,id):
     return redirect('/supervisorTaskPage/')
 
 def supervisorTaskPage(request):
-    supervisortask=SupervisorCreatetask.objects.all()
-    return render(request, 'supervisor/task-page.html',{'supervisortask': supervisortask})
+    supervisortasks=SupervisorCreatetask.objects.all()
+    context={
+        'supervisortasks': supervisortasks
+    }
+    return render(request, 'supervisor/task-page.html',context)
 
 
 
@@ -254,19 +255,57 @@ def supervisorCreateWorkerPage(request):
         worktype=request.POST['worktype']
         status=request.POST['status'].lower()
         image=request.FILES['image']
-        group=request.POST['group']
         
-        supervisorworker=SupervisorCreateworker(name=name, phone=phone, role=role, email=email, worktype=worktype,status=status,group=group,image=image)
+        supervisorworker=SupervisorCreateworker(name=name, phone=phone, role=role, email=email, worktype=worktype,status=status,image=image)
         create_user  = CustomUser.objects.create_user(username=name, email=email, user_type=role.lower(), password=email)
         create_user.save()
+        print(create_user)
         supervisorworker.save()
         
         return redirect('/supervisorWorkerPage/')
     return render(request, 'supervisor/create-worker.html')
 
+
+
+def supervisorEditWorkerPage(request, id):
+    if request.method=="POST":
+        name=request.POST['name']
+        phone=request.POST['phone']
+        role=request.POST['role']
+        email=request.POST['email']
+        worktype=request.POST['worktype']
+        status=request.POST['status'].lower()
+        image=request.FILES['image']
+        
+        
+        supervisorworkers=SupervisorCreateworker.objects.get(id=id)
+        
+        supervisorworkers.name = name
+        supervisorworkers.phone = phone
+        supervisorworkers.role = role
+        supervisorworkers.email = email
+        supervisorworkers.worktype = worktype
+        supervisorworkers.status = status
+        supervisorworkers.image = image
+        
+        supervisorworkers.save()
+        return redirect('/supervisorWorkerPage/')
+    
+    supervisorworkers=SupervisorCreateworker.objects.get(id=id)
+    return render(request, 'supervisor/edit-worker.html',{'supervisorworkers': supervisorworkers})
+
+def supervisorWorkerDelete(request, id):
+    supervisorworkers=SupervisorCreateworker.objects.get(id=id)
+    supervisorworkers.delete()
+    return redirect('/workersPage/')
+
+
 def supervisorWorkerPage(request):
-    supervisorworker=SupervisorCreateworker.objects.all()
-    return render(request,'supervisor/worker.html',{'supervisorworker': supervisorworker})
+    supervisorworkers=SupervisorCreateworker.objects.all()
+    context={
+        'supervisorworkers': supervisorworkers,
+    }
+    return render(request,'supervisor/worker.html',context)
 
 
 def chartPage(request):
@@ -275,19 +314,7 @@ def chartPage(request):
 def MaininventoryTablePage(request):
     return render(request,'main/inventory-table.html')
 
-def MainProfileForm(request):
-    if request.method=="POST":
-        name=request.POST['name']
-        role=request.POST['role']
-        email=request.POST['email']
-        phone=request.POST['phone']
-        image=request.FILES['image']
 
-
-        mainProfile=MainProfile(name=name,role=role,email=email,phone=phone,image=image)
-        mainProfile.save()
-        return redirect('/home/') 
-    return render(request,'main/profile-form.html')
 
 def MainProfilePage(request):
     mainProfiles=MainProfile.objects.all()
@@ -297,49 +324,21 @@ def MainProfilePage(request):
     return render(request,'main/profile.html',context)
 
 
-def SupervisorProfileForm(request):
-    if request.method=="POST":
-        name=request.POST['name']
-        role=request.POST['role']
-        email=request.POST['email']
-        phone=request.POST['phone']
-        image=request.FILES['image']
-
-
-        supervisorProfile=SupervisorProfile(name=name,role=role,email=email,phone=phone,image=image)
-        supervisorProfile.save()
-        return redirect('/supervisorHome/') 
-                        
-    return render(request,'supervisor/profile-form.html')
 
 def SupervisorProfilePage(request):
-    supervisorProfiles=SupervisorProfile.objects.all()
+    supervisorProfiles=get_object_or_404(Worker,email=request.user.email)
     context={
         'supervisorProfiles':supervisorProfiles
     }
     return render(request,'supervisor/profile.html',context)
 
-def WorkerProfileForm(request):
-    if request.method=="POST":
-        name=request.POST['name']
-        role=request.POST['role']
-        email=request.POST['email']
-        phone=request.POST['phone']
-        image=request.FILES['image']
-
-
-        workerProfile=WorkerProfile(name=name,role=role,email=email,phone=phone,image=image)
-        workerProfile.save()
-        return redirect('/workerHome/') 
-    
-    return render(request,'workers/profile-form.html')
 
 
 
 def WorkerProfilePage(request):
-    workerProfiles=WorkerProfile.objects.all()
+    profiles=get_object_or_404(SupervisorCreateworker,email=request.user.email)
     context={
-        'workerProfiles': workerProfiles
+        'profiles': profiles
     }
     return render(request,'workers/profile.html',context)
 

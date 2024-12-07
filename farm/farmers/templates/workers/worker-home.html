@@ -39,13 +39,12 @@ Homepage
 
 
           <div class="col-lg-6">
-{% for workerProfile in workerProfiles %}
 
             <div class="card">
               <div class="card-body pt-3">
                 <div class="tab-content pt-2">
                   <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                    <img src="{{workerProfile.image.url}}" width="80px" height="80px"alt="Profile-image" class="rounded-circle">
+                    <img src="{{profiles.image.url}}" width="80px" height="80px"alt="Profile-image" class="rounded-circle">
                       </div>
                   <div class="tab-pane fade show active profile-overview" >
                   
@@ -54,22 +53,27 @@ Homepage
   
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                      <div class="col-lg-9 col-md-8">{{workerProfile.name}}</div>
+                      <div class="col-lg-9 col-md-8">{{profiles.name}}</div>
                     </div>
                     <br/>
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Job</div>
-                      <div class="col-lg-9 col-md-8">{{workerProfile.role}}</div>
+                      <div class="col-lg-9 col-md-8">{{profiles.role}}</div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                      <div class="col-lg-3 col-md-4 label">Worker ID</div>
+                      <div class="col-lg-9 col-md-8">42700{{profiles.id}}</div>
                     </div>
                     <br/>
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Phone</div>
-                      <div class="col-lg-9 col-md-8">0{{workerProfile.phone}}</div>
+                      <div class="col-lg-9 col-md-8">0{{profiles.phone}}</div>
                     </div>
           <br/>
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Email</div>
-                      <div class="col-lg-9 col-md-8">{{workerProfile.email}}</div>
+                      <div class="col-lg-9 col-md-8">{{profiles.email}}</div>
                     </div>
 
                  
@@ -80,7 +84,7 @@ Homepage
                 </div>
               </div>
             </div>
-            {% endfor %}
+  
 
  
    </div><!-- End Bordered Tabs -->
@@ -145,9 +149,9 @@ Homepage
             <table class="table table-borderless datatable">
               <thead>
                 <tr>
-                  <th scope="col">Role</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Task</th>
+                  <th scope="col">Heading</th>
+                  <th scope="col">Description</th>
                   <th scope="col">Days</th>
                   <th scope="col">Status</th>
                 </tr>
@@ -157,11 +161,11 @@ Homepage
               
              {% for supervisortask in  supervisortasks %}
                <tr>
-                  <th scope="row"><a href="#">{{supervisortask.role}}</a></th>
-                  <td>{{supervisortask.name}}</td>
+                <td>{{supervisortask.name}}</td>
+                  <td>{{supervisortask.heading}}</td>
                   <td><a href="#" class="text-primary">{{supervisortask.description}}</a></td>
                   <td>{{supervisortask.days}}</td>
-                  <td><span class="badge ">{{supervisortask.status}}</span></td>
+                  <td><span class="badge  btn create-button">Pending</span></td>
                 </tr>
                
                 {% endfor %}
@@ -175,63 +179,6 @@ Homepage
       </div><!-- End Recent Sales -->
 
 
-
-            <!-- Top Selling -->
-            <div class="col-12">
-              <div class="card top-selling overflow-auto">
-
-                <div class="filter">
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  
-                </div>
-
-                <div class="card-body pb-0">
-                  <h5 class="card-title">Current Workers <span>| Today</span></h5>
-
-                  <table class="table table-borderless">
-                    <thead>
-                      <tr>
-                        <th scope="col">Worker</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Worker ID</th>
-                        <th scope="col">Group</th>
-                        <th scope="col">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-
-                      {% for supervisorworker in supervisorworkers %}
-                      <tr>
-                        <th scope="row"><a href="#"><img src="{{supervisorworker.image.url}}" alt=""></a></th>
-                        <td><a href="#" class="text-primary fw-bold">{{supervisorworker.name}}</a></td>
-                        <td>{{supervisorworker.role}}</td>
-                        <td class="fw-bold">{{supervisorworker.email}}</td>
-                        <td>417100{{supervisorworker.id}}</td>
-                        <td class="fw-bold">{{supervisorworker.group}}</td>
-                        <td>   
-                          {% if  supervisorworker.status == "terminated" %}
-                          <button type="button" class="btn btn-danger">Terminated</button>
-                          {% elif supervisorworker.status == "active" %}
-                          <button type="button" class="btn btn-success">Active</button>
-                          {% elif supervisorworker.status == "leave"  %}
-                          <button type="button" class="btn btn-warning">Leave</button>
-                          {% else %}
-                        <p>Invalid entry!!</p>
-                          {% endif %}</td>
-                      </tr>
-                      
-                      {% endfor %}
-
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Top Selling -->
 
 
       

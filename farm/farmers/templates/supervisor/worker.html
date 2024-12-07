@@ -22,40 +22,39 @@
       <div class="row align-items-top">
         <div class="col-lg-10">
 
-        
-
 
       
          
           {% for supervisorworker in supervisorworkers%}
           <div class="card  mb-3">
             <div class="row g-0">
+              <div class="card-header bg-transparent border-success worker-header">Farm worker</div>
          <div class="col-md-4 ">
                 <img src="{{supervisorworker.image.url}}"class="img-fluid rounded mt-2 ms-2" alt="...">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{supervisorworker.name}}</h5><span>427100{{worker.id}}</span>
-                  <p class="card-text">{{supervisorworker.role}}</p>
+                  <h5 class="card-title">{{supervisorworker.name}}</h5><span>427100{{supervisorworker.id}}</span>
+                  <p class="card-text mt-2">{{supervisorworker.role}}</p>
                   <p class="card-text">0{{supervisorworker.phone}}</p>
                   <p class="card-text">{{supervisorworker.worktype}}</p>
                   <p class="card-text">{{supervisorworker.email}}</p>
                   <p class="card-text">Employment status</p>
-                  {% if  worker.status == "terminated" %}
+                  {% if  supervisorworker.status == "terminated" %}
                   <button type="button" class="btn btn-danger">Terminated</button>
-                  {% elif worker.status == "active" %}
+                  {% elif supervisorworker.status == "active" %}
                   <button type="button" class="btn btn-success">Active</button>
-                  {% elif worker.status == "leave"  %}
+                  {% elif supervisorworker.status == "leave"  %}
                   <button type="button" class="btn btn-warning">Leave</button>
                   {% else %}
                 <p>Invalid entry!!</p>
                   {% endif %}
               <div>
                   <span>
-                    <a href=" " class="btn create-button ms-1 me-2">Edit worker</a>
+                    <a href="/supervisorEditWorkerPage/{{supervisorworker.id}} " class="btn create-button ms-1 me-2">Edit worker</a>
                   </span>
                   <span>
-                    <a href=" " class="btn create-button">Delete worker</a>
+                    <a href="/supervisorWorkerDelete/{{supervisorworker.id}} " class="btn create-button">Delete worker</a>
                   </span>
                 </div>
                 </div>
@@ -65,6 +64,12 @@
             </div>
           </div><!-- End Card with an image on left -->
           {% endfor %}
+
+
+
+
+
+
 
 
         </div>
