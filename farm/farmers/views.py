@@ -5,12 +5,7 @@ from authentication.models import CustomUser
 
 #Admins Pages
 # Create your views here.
-def login(request):
-    return render(request,'login/login.html')
 
-
-def register(request):
-    return render(request,'login/register.html')
 
 @csrf_exempt
 def index(request):
