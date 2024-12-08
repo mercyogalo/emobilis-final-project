@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from . models import Farmer, Task, Worker, SupervisorCreatetask, SupervisorCreateworker
+from . models import Farmer, Task, Worker, SupervisorCreatetask, SupervisorCreateworker, Contact
 from django.views.decorators.csrf import csrf_exempt
 from authentication.models import CustomUser
 
@@ -13,7 +13,7 @@ def index(request):
     workers=Worker.objects.all()
     supervisorworkers=SupervisorCreateworker.objects.all()
     supervisortasks=SupervisorCreatetask.objects.all()
-    mainProfiles=MainProfile.objects.all()
+    mainProfiles=get_object_or_404(CustomUser,  id=request.user.id)
     context={
         'tasks': tasks,
         'workers':workers,
@@ -135,18 +135,26 @@ def deleteTask(request, id):
     return redirect('/tasksPage/')
 
     
+
+def notifications(request):
+    contacts=Contact.objects.all()
+    context={
+        'contacts': contacts
+    }
+    return render(request,'main/notifications.html',context)
+    
+    
 def contact(request):
     if request.method=="POST":
         name=request.POST['name']
         email=request.POST['email']
-        role=request.POST['role']
-        workId=request.POST['workId']
         subject=request.POST['subject']
         message=request.POST['message']
         image=request.POST['image']
         
-        contact=Contact(name=name, email=email, role=role, workId=workId, subject=subject, message=message, image=image)
+        contact=Contact(name=name, email=email, subject=subject, message=message, image=image)
         contact.save()
+        return redirect('/workerHome/')
     return render(request,'workers/contact.html')
 
 
@@ -312,7 +320,7 @@ def MaininventoryTablePage(request):
 
 
 def MainProfilePage(request):
-    mainProfiles=MainProfile.objects.all()
+    mainProfiles=get_object_or_404(CustomUser, id=request.user.id)
     context={
         'mainProfiles': mainProfiles
     }
@@ -336,6 +344,5 @@ def WorkerProfilePage(request):
         'profiles': profiles
     }
     return render(request,'workers/profile.html',context)
-
 
 

@@ -44,8 +44,6 @@ class Worker(models.Model):
 class Contact(models.Model):
     name=models.CharField( max_length=100)
     email=models.EmailField()
-    role=models.CharField( max_length=100)
-    workId=models.IntegerField()
     subject=models.CharField( max_length=100)
     message=models.CharField( max_length=100)
     image=models.ImageField( upload_to='contactimages/')

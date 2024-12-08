@@ -17,13 +17,13 @@
       
 
         <div class="col-xl-10">
-          {% for mainProfile in mainProfiles %}
+        
           
                       <div class="card">
                         <div class="card-body pt-3">
                           <div class="tab-content pt-2">
                             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                              <img src="{{mainProfile.image.url}}" width="80px" height="80px" alt="Profile-image" class="rounded-circle">
+                              <img src="{{mainProfiles.image.url}}" width="80px" height="80px" alt="Profile-image" class="rounded-circle">
                                 </div>
                             <div class="tab-pane fade show active profile-overview" >
                             
@@ -32,22 +32,22 @@
             
                               <div class="row">
                                 <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                <div class="col-lg-9 col-md-8">{{mainProfile.name}}</div>
+                                <div class="col-lg-9 col-md-8">{{mainProfiles.name}}</div>
                               </div>
                               <br/>
                               <div class="row">
                                 <div class="col-lg-3 col-md-4 label">Job</div>
-                                <div class="col-lg-9 col-md-8">{{mainProfile.role}}</div>
+                                <div class="col-lg-9 col-md-8">{{mainProfiles.role}}</div>
                               </div>
                               <br/>
                               <div class="row">
                                 <div class="col-lg-3 col-md-4 label">Phone</div>
-                                <div class="col-lg-9 col-md-8">0{{mainProfile.phone}}</div>
+                                <div class="col-lg-9 col-md-8">0{{mainProfiles.phone}}</div>
                               </div>
                     <br/>
                               <div class="row">
                                 <div class="col-lg-3 col-md-4 label">Email</div>
-                                <div class="col-lg-9 col-md-8">{{mainProfile.email}}</div>
+                                <div class="col-lg-9 col-md-8">{{mainProfiles.email}}</div>
                               </div>
             
                            
@@ -56,7 +56,7 @@
                           </div>
                         </div>
                       </div>
-                      {% endfor %}
+                   
           
          
 

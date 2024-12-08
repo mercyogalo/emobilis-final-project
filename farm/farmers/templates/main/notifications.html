@@ -1,0 +1,77 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+
+
+
+{% block title %}
+Homepage
+{% endblock  %}
+
+
+
+{% block  body%}
+
+
+
+  <main id="main" class="main">
+
+
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <div class="pagetitle">
+          <h1>Dashboard</h1>
+        </div><!-- End Page Title -->
+
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+          <div class="row">
+
+
+
+            <div class="col-lg-6">
+              {% for contact in contacts %}
+              <div class="card  mb-3">
+                <div class="row g-0">
+                    <div class="card-header bg-transparent border-success worker-header">{{contact.subject}}</div>
+             <div class="col-md-4 ">
+                    <img src="{{contact.image.url}}"class="img-fluid rounded mt-2 ms-2" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{contact.name}}</h5>
+                      <p class="card-text mt-2">{{worker.email}}</p>
+                      <p class="card-text">0{{worker.message}}</p>
+               
+                    </div>
+                  </div>
+              
+              
+                </div>
+              </div><!-- End Card with an image on left -->
+                          {% endfor %}
+              
+
+     </div><!-- End Bordered Tabs -->
+  
+  
+  
+
+
+
+          </div>
+        </div><!-- End Left side columns -->
+
+    
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  
+
+  {% endblock  %}
