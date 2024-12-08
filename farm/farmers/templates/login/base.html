@@ -39,11 +39,24 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+<style>
+  .login-main {
+    background-image: url(https://s3.amazonaws.com/shecodesio-production/uploads/files/000/152/274/original/Agriculture_farming_in_Viet_Nam_.jpg?1733646648);
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    width: 100vw; 
+    height: 100vh; 
+  }
+</style>
+
+
 </head>
 
 <body>
 
-  <main>
+  <main class="login-main">
     <div class="container">
 
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
@@ -51,18 +64,10 @@
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-              <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <span class="d-none d-lg-block">Agrigrow Farms</span>
-                </a>
-              </div><!-- End Logo -->
-
-
               {% block  body%}
               
               {% endblock  %}
 
-              <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
               <!-- Vendor JS Files -->
               <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
