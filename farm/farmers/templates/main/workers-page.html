@@ -49,10 +49,10 @@
                   {% endif %}
               <div>
                   <span>
-                    <a href="/editWorker/{{worker.id}}" class="btn create-button ms-1 me-2">Edit worker</a>
+                    <a href="{% url 'farmers:editWorker' worker.id  %}" class="btn create-button ms-1 me-2">Edit worker</a>
                   </span>
                   <span>
-                    <a href="/deleteWorker/{{worker.id}}" class="btn create-button">Delete worker</a>
+                    <a href="{% url 'farmers:deleteWorker' worker.id %}" class="btn create-button">Delete worker</a>
                   </span>
                 </div>
                 </div>

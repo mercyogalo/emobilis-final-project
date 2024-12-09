@@ -45,11 +45,11 @@ def createWorkersPage(request):
         image=request.FILES['image']
         
         worker=Worker(name=name, phone=phone, role=role, email=email, worktype=worktype,status=status,image=image)
-        create_user  = CustomUser.objects.create_user(username=name, email=email, user_type=role.lower(), password=email)
+        create_user  = CustomUser.objects.create_user(username=name, name=name,  email=email, user_type=role.lower(), password=email)
         create_user.save()
         worker.save()
         
-        return redirect('/workersPage/')
+        return redirect('farmers:workersPage')
     
     return render(request,'main/create-workers.html')
 
@@ -75,15 +75,16 @@ def editWorker(request, id):
         workers.image = image
         
         workers.save()
-        return redirect('/workersPage/')
-    
+        return redirect('farmers:workersPage')
+    # just edit these 
     workers=Worker.objects.get(id=id)
     return render(request, 'main/edit-worker.html',{'workers': workers})
 
 def deleteWorker(request, id):
     workers=Worker.objects.get(id=id)
+    user = CustomUser.objects.get(name=workers.name).delete()
     workers.delete()
-    return redirect('/workersPage/')
+    return redirect('farmers:workersPage')
 
 def createTasksPage(request):
     if request.method=="POST":
@@ -95,7 +96,7 @@ def createTasksPage(request):
         
         task=Task(name=name,role=role,heading=heading,description=description,days=days)
         task.save()
-        return redirect('/tasksPage/')    
+        return redirect('farmers:tasksPage')    
                
     return render(request,'main/create-tasks.html')
 
@@ -123,7 +124,7 @@ def editTask(request, id):
         tasks.days = days
 
         tasks.save()
-        return redirect('/tasksPage/')
+        return redirect('farmers:tasksPage')
         
     tasks=Task.objects.get(id = id)
     return render(request, 'main/edit-task.html',{'tasks': tasks})
@@ -132,16 +133,11 @@ def deleteTask(request, id):
     tasks=Task.objects.get(id=id)
     tasks.delete()
     
-    return redirect('/tasksPage/')
+    return redirect('farmers:tasksPage')
 
     
 
-def notifications(request):
-    contacts=Contact.objects.all()
-    context={
-        'contacts': contacts
-    }
-    return render(request,'main/notifications.html',context)
+
     
     
 def contact(request):
@@ -262,7 +258,6 @@ def supervisorCreateWorkerPage(request):
         supervisorworker=SupervisorCreateworker(name=name, phone=phone, role=role, email=email, worktype=worktype,status=status,image=image)
         create_user  = CustomUser.objects.create_user(username=name, email=email, user_type=role.lower(), password=email)
         create_user.save()
-        print(create_user)
         supervisorworker.save()
         
         return redirect('/supervisorWorkerPage/')
