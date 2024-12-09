@@ -45,7 +45,8 @@ def createWorkersPage(request):
         image=request.FILES['image']
         
         worker=Worker(name=name, phone=phone, role=role, email=email, worktype=worktype,status=status,image=image)
-        create_user  = CustomUser.objects.create_user(username=name, name=name,  email=email, user_type=role.lower(), password=email)
+        #create_user  = CustomUser.objects.create_user(username=name, name=name,  email=email, user_type=role.lower(), password=email)
+        create_user  = CustomUser.objects.create_user(username=email, email=email, user_type=role.lower(), password=email)
         create_user.save()
         worker.save()
         
@@ -204,7 +205,7 @@ def supervisorCreateTaskPage(request):
         
         supervisortask=SupervisorCreatetask(name=name,role=role,heading=heading,description=description,days=days)
         supervisortask.save()
-        return redirect('farmers:supervisorTaskPage/')    
+        return redirect('farmers:supervisorTaskPage')    
     
     return render(request,'supervisor/create-task.html')
 
@@ -234,7 +235,7 @@ def supervisorEditTaskPage(request,id):
 def supervisorTaskDelete(request,id):
     supervisortasks=SupervisorCreatetask.objects.get(id = id)
     supervisortasks.delete()
-    return redirect('/supervisorTaskPage/')
+    return redirect('farmers:supervisorTaskPage')
 
 def supervisorTaskPage(request):
     supervisortasks=SupervisorCreatetask.objects.all()
@@ -256,7 +257,8 @@ def supervisorCreateWorkerPage(request):
         image=request.FILES['image']
         
         supervisorworker=SupervisorCreateworker(name=name, phone=phone, role=role, email=email, worktype=worktype,status=status,image=image)
-        create_user  = CustomUser.objects.create_user(username=name, email=email, user_type=role.lower(), password=email)
+        #create_user  = CustomUser.objects.create_user(username=name, email=email, user_type=role.lower(), password=email)
+        create_user  = CustomUser.objects.create_user(username=email, email=email, user_type=role.lower(), password=email)
         create_user.save()
         supervisorworker.save()
         
@@ -295,7 +297,7 @@ def supervisorEditWorkerPage(request, id):
 def supervisorWorkerDelete(request, id):
     supervisorworkers=SupervisorCreateworker.objects.get(id=id)
     supervisorworkers.delete()
-    return redirect('farmers:workersPage')
+    return redirect('farmers:supervisorWorkerPage')
 
 
 def supervisorWorkerPage(request):
