@@ -49,10 +49,10 @@
               </div>
 
               <span>
-                <a href="/supervisorEditTaskPage/{{supervisortask.id}}" class="btn create-button ms-1 me-2">Edit task</a>
+                <a href="{% url 'farmers:supervisorEditTaskPage' supervisortask.id  %}" class="btn create-button ms-1 me-2">Edit task</a>
               </span>
               <span>
-                <a href="/supervisorTaskDelete/{{supervisortask.id}}" class="btn create-button">Delete task</a>
+                <a href="{% url 'farmers:supervisorTaskDelete' supervisortask.id  %}" class="btn create-button">Delete task</a>
               </span>
 
             </div>

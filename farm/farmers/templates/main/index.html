@@ -166,7 +166,7 @@ Homepage
                         <td>{{task.name}}</td>
                         <td class="text-primary">{{task.description}}</td>
                         <td>{{task.days}}</td>
-                        <td><span class="badge ">{{task.status}}</span></td>
+                        <td><span class="badge  btn create-button">Pending</span></td>
                       </tr>
                      
                       {% endfor %}
@@ -324,6 +324,7 @@ Homepage
             <th scope="col">Role</th>
             <th scope="col">Email</th>
             <th scope="col">Phone number</th>
+            <th scope="col">Worker ID</th>
             <th scope="col">Status</th>
           </tr>
         </thead>
@@ -337,6 +338,7 @@ Homepage
             <td>{{supervisorworker.role}}</td>
             <td class="text-primary">{{supervisorworker.email}}</td>
             <td>0{{supervisorworker.phone}}</td>
+            <td>42700{{supervisorworker.id}}</td>
             <td>   
               {% if  supervisorworker.status == "terminated" %}
               <button type="button" class="btn btn-danger">Terminated</button>

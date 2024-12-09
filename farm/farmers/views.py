@@ -150,7 +150,7 @@ def contact(request):
         
         contact=Contact(name=name, email=email, subject=subject, message=message, image=image)
         contact.save()
-        return redirect('/workerHome/')
+        return redirect('farmers:workerHome')
     return render(request,'workers/contact.html')
 
 
@@ -204,7 +204,7 @@ def supervisorCreateTaskPage(request):
         
         supervisortask=SupervisorCreatetask(name=name,role=role,heading=heading,description=description,days=days)
         supervisortask.save()
-        return redirect('/supervisorTaskPage/')    
+        return redirect('farmers:supervisorTaskPage/')    
     
     return render(request,'supervisor/create-task.html')
 
@@ -226,7 +226,7 @@ def supervisorEditTaskPage(request,id):
         supervisortasks.days = days
 
         supervisortasks.save()
-        return redirect('/supervisorTaskPage/')
+        return redirect('farmers:supervisorTaskPage')
         
     supervisortasks=SupervisorCreatetask.objects.get(id = id)
     return render(request,'supervisor/edit-task.html',{'supervisortasks': supervisortasks})
@@ -260,7 +260,7 @@ def supervisorCreateWorkerPage(request):
         create_user.save()
         supervisorworker.save()
         
-        return redirect('/supervisorWorkerPage/')
+        return redirect('farmers:supervisorWorkerPage')
     return render(request, 'supervisor/create-worker.html')
 
 
@@ -287,7 +287,7 @@ def supervisorEditWorkerPage(request, id):
         supervisorworkers.image = image
         
         supervisorworkers.save()
-        return redirect('/supervisorWorkerPage/')
+        return redirect('farmers:supervisorWorkerPage')
     
     supervisorworkers=SupervisorCreateworker.objects.get(id=id)
     return render(request, 'supervisor/edit-worker.html',{'supervisorworkers': supervisorworkers})
@@ -295,7 +295,7 @@ def supervisorEditWorkerPage(request, id):
 def supervisorWorkerDelete(request, id):
     supervisorworkers=SupervisorCreateworker.objects.get(id=id)
     supervisorworkers.delete()
-    return redirect('/workersPage/')
+    return redirect('farmers:workersPage')
 
 
 def supervisorWorkerPage(request):
