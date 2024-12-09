@@ -150,7 +150,7 @@ def contact(request):
         email=request.POST['email']
         subject=request.POST['subject']
         message=request.POST['message']
-        image=request.POST['image']
+        image=request.FILES['image']
         
         contact=Contact(name=name, email=email, subject=subject, message=message, image=image)
         contact.save()
@@ -310,12 +310,6 @@ def supervisorWorkerPage(request):
     }
     return render(request,'supervisor/worker.html',context)
 
-
-def chartPage(request):
-    return render(request, 'charts-chartjs.html')
-
-def MaininventoryTablePage(request):
-    return render(request,'main/inventory-table.html')
 
 
 

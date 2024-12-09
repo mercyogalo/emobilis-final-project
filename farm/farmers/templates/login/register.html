@@ -11,53 +11,49 @@
 
                 <div class="card-body">
 
-                  <div class="pt-1 pb-1">
-                    <h5 class="card-title form-main-label text-center pb-0 fs-4">Create an Account</h5>
-                    <p class="text-center small">Enter your personal details to create account</p>
+                  <div class=" pt-0 pb-0">
+                    <h5 class="card-title form-main-label text-center pb-0 fs-2">Create an Account</h5>
                   </div>
 
-                  <form class="row g-0 needs-validation" novalidate method='POST'>
+                  <form class="row g-0 needs-validation" novalidate method='POST' enctype="multipart/form-data" >
                   {% csrf_token %}
-                    <div class="col-12">
+                   {% comment %} {{ form.as_p}} {% endcomment %}
+
+                  <div class="col-6">
+                    <label for="yourEmail" class="form-label">Your Name</label>
+                   {{ form.name  }}
+                    <div class="invalid-feedback">Please enter your name!</div>
+                  </div>  
+                  <div class="col-6">
+                    <label for="yourEmail" class="form-label">Username</label>
+                   {{ form.username  }}
+                    <div class="invalid-feedback">Please enter your name!</div>
+                  </div>
+                  <div class="col-6">
+                    <label for="yourEmail" class="form-label">Phone number</label>
+                    {{ form.phone }}
+                    <div class="invalid-feedback">Please enter your name!</div>
+                  </div>
+
+                    <div class="col-6">
                       <label for="yourEmail" class="form-label">Your Email</label>
-                      <input type="email" 
-                      name="email"
-                       class="form-control"
-                        id="yourEmail" required>
+                     {{ form.email }}
                       <div class="invalid-feedback">Please enter a valid Email adddress!</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text"
-                         name="username" 
-                         class="form-control"
-                          id="yourUsername" 
-                          required>
-                        <div class="invalid-feedback">Please choose a username.</div>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" 
-                      name="password" 
-                      class="form-control"
-                       id="yourPassword"
-                        required>
+                      {{ form.password }}
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
-                    <div class="col-12">
-                      <label for="yourPassword" class="form-label">Confirm Password</label>
-                      <input type="password" 
-                      name="password2" 
-                      class="form-control"
-                       id="yourPassword"
-                        required>
-                      <div class="invalid-feedback">Please Confirm  your password!</div>
+
+
+                    <div class="col-12 mt-1">
+                     {{ form.image }}
+                      {{ form.errors }}
+                      <div class="invalid-feedback"></div>
                     </div>
+
                     <div class="col-12">
                       <button class="btn login-btn w-100 mt-1" type="submit">Create Account</button>
                     </div>

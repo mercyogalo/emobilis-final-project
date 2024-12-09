@@ -28,7 +28,4 @@ urlpatterns = [
   path("SupervisorProfilePage/", views.SupervisorProfilePage, name="SupervisorProfilePage"),
    path("MainProfilePage/", views.MainProfilePage, name="MainProfilePage"),
     path("WorkerProfilePage/", views.WorkerProfilePage, name="WorkerProfilePage"),
-  path("chartPage/", views.chartPage, name="chartPage"),
-  path("MaininventoryTablePage/", views.MaininventoryTablePage, name="MaininventoryTablePage"),
-  #path("inventoryFormPage/", views.inventoryFormPage, name="inventoryFormPage")
 ]

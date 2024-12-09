@@ -4,35 +4,24 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from .forms import UserForm
 # Create your views here.
 
 def register(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password  = request.POST['password']
-        password2  = request.POST['password2']
-        user_type = 'admin'
-        
-        check = True if CustomUser.objects.filter(email=email).exists() else False
-        if check: 
-           return HttpResponse("user Exists")
-            
-        if password2 != password:
-            messages.error(request, 'Passwords do not match')
-            return HttpResponse("passwords do not match")
-        
-        try:
-            user = CustomUser.objects.create_user(username=username, email=email, user_type=user_type, password=password)
-            user.superuser = True
-            user.save()
-        except:
-            return HttpResponse("User creation fail")
-        
-        messages.success(request, 'Account Registered Successfuly')
-        return redirect('authentication:login')
     
-    return render(request,'login/register.html')
+    if request.method == 'POST' :
+        form = UserForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                user = form.save(commit=False)  
+                user.set_password(form.cleaned_data['password']) 
+                user.save()
+                return redirect('authentication:login') 
+            except:
+                print(form.cleaned_data)
+    else:
+        form = UserForm()
+    return render(request, 'login/register.html', {'form': form})
 
 @csrf_exempt
 def login_(request):
